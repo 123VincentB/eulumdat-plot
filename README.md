@@ -21,7 +21,7 @@ on top of [`eulumdat-py`](https://pypi.org/project/eulumdat-py/).
 
 ---
 
-![Photometric diagram example](docs/img/sample_01.svg) ![Photometric diagram example](docs/img/sample_02.svg)
+![Photometric diagram example](https://raw.githubusercontent.com/123VincentB/eulumdat-plot/main/docs/img/sample_01.png) ![Photometric diagram example](https://raw.githubusercontent.com/123VincentB/eulumdat-plot/main/docs/img/sample_02.png)
 
 ---
 
