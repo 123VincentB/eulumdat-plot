@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "eulumdat-plot"
-version = "1.0.1"
+version = "1.0.2"
 description = "Photometric polar diagram generator for EULUMDAT (.ldt) files — extension to eulumdat-py"
 readme = "README.md"
 license = { text = "MIT" }
