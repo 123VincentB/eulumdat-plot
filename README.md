@@ -1,5 +1,10 @@
 # eulumdat-plot
 
+[![PyPI](https://img.shields.io/pypi/v/eulumdat-plot)](https://pypi.org/project/eulumdat-plot/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/eulumdat-plot)](https://pypi.org/project/eulumdat-plot/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/123VincentB/eulumdat-plot/blob/main/LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19096110.svg)](https://doi.org/10.5281/zenodo.19096110)
+
 Photometric polar diagram generator for EULUMDAT (`.ldt`) files —
 designed for **product datasheets and publication-ready documents**.
 
@@ -16,7 +21,7 @@ on top of [`eulumdat-py`](https://pypi.org/project/eulumdat-py/).
 
 ---
 
-![Photometric diagram example](docs/img/sample_01.svg)
+![Photometric diagram example](docs/img/sample_01.svg) ![Photometric diagram example](docs/img/sample_02.svg)
 
 ---
 
@@ -111,16 +116,16 @@ def plot_ldt(
 ) -> Path
 ```
 
-| Parameter | Default | Description |
-|---|---|---|
-| `ldt_path` | — | Source `.ldt` file |
-| `svg_path` | same name, `.svg` | Output SVG path |
-| `code` | `""` | Distribution code shown in the banner centre |
-| `layout` | `Layout()` | Visual parameters |
-| `interpolate` | `True` | Resample I(γ) before plotting |
-| `interp_step_deg` | `1.0` | Angular step for resampling (degrees) |
-| `interp_method` | `"linear"` | `"linear"` or `"cubic"` (requires scipy) |
-| `debug` | `False` | Colour-code C-planes for visual validation |
+| Parameter         | Default           | Description                                  |
+| ----------------- | ----------------- | -------------------------------------------- |
+| `ldt_path`        | —                 | Source `.ldt` file                           |
+| `svg_path`        | same name, `.svg` | Output SVG path                              |
+| `code`            | `""`              | Distribution code shown in the banner centre |
+| `layout`          | `Layout()`        | Visual parameters                            |
+| `interpolate`     | `True`            | Resample I(γ) before plotting                |
+| `interp_step_deg` | `1.0`             | Angular step for resampling (degrees)        |
+| `interp_method`   | `"linear"`        | `"linear"` or `"cubic"` (requires scipy)     |
+| `debug`           | `False`           | Colour-code C-planes for visual validation   |
 
 ### `Layout.for_size()`
 
@@ -142,9 +147,9 @@ Requires `pip install "eulumdat-plot[export]"`.
 
 ## Examples
 
-| File | Description |
-|---|---|
-| [`examples/01_basic_usage.md`](examples/01_basic_usage.md) | Generate an SVG from a `.ldt` file |
+| File                                                                   | Description                              |
+| ---------------------------------------------------------------------- | ---------------------------------------- |
+| [`examples/01_basic_usage.md`](examples/01_basic_usage.md)             | Generate an SVG from a `.ldt` file       |
 | [`examples/02_resize_and_export.md`](examples/02_resize_and_export.md) | Scaling, raster export, batch processing |
 
 ## Project structure
@@ -176,13 +181,13 @@ eulumdat-plot/
 
 ## EULUMDAT ecosystem
 
-| Package | Status | Description |
-|---|---|---|
-| [`eulumdat-py`](https://pypi.org/project/eulumdat-py/) | v0.1.4 | Read / write EULUMDAT files |
-| [`eulumdat-symmetry`](https://pypi.org/project/eulumdat-symmetry/) | v1.0.0 | Symmetrise EULUMDAT files |
-| `eulumdat-plot` | v1.0.0 | Photometric polar diagram — **this package** |
-| `eulumdat-luminance` | planned | Luminance table cd/m² (γ 55°–85°) |
-| `eulumdat-ugr` | planned | UGR calculation (CIE 117, CIE 190) |
+| Package                                                            | Status  | Description                                  |
+| ------------------------------------------------------------------ | ------- | -------------------------------------------- |
+| [`eulumdat-py`](https://pypi.org/project/eulumdat-py/)             | v0.1.4  | Read / write EULUMDAT files                  |
+| [`eulumdat-symmetry`](https://pypi.org/project/eulumdat-symmetry/) | v1.0.0  | Symmetrise EULUMDAT files                    |
+| `eulumdat-plot`                                                    | v1.0.0  | Photometric polar diagram — **this package** |
+| `eulumdat-luminance`                                               | planned | Luminance table cd/m² (γ 55°–85°)            |
+| `eulumdat-ugr`                                                     | planned | UGR calculation (CIE 117, CIE 190)           |
 
 ## Requirements
 

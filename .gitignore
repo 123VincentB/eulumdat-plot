@@ -28,4 +28,12 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
+# Project-specific
 CONTEXT_eulumdat-plot.md
+tree.py
+
+# Generated output files (SVG / PNG / JPEG / JPG)
+data/output/*.svg
+data/output/*.png
+data/output/*.jpg
+data/output/*.jpeg
