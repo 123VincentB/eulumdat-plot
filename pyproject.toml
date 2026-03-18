@@ -4,29 +4,70 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "eulumdat-plot"
-version = "0.0.1"
-description = "Photometric curve plotting for EULUMDAT (.ldt) files — extension to eulumdat-py"
+version = "1.0.0"
+description = "Photometric polar diagram generator for EULUMDAT (.ldt) files — extension to eulumdat-py"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "123VincentB" }]
 requires-python = ">=3.9"
+
 dependencies = [
-    "eulumdat-py>=1.0.0",
+    "eulumdat-py >= 1.0.0",
+    "numpy >= 1.21",
+    "svgwrite >= 1.4",
 ]
-keywords = ["eulumdat", "ldt", "photometry", "lighting", "polar", "plot", "svg"]
+
+keywords = [
+    "eulumdat", "ldt", "photometry", "lighting", "luminaire",
+    "polar", "candela", "diagram", "svg", "lumtopic",
+]
+
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
+    "Intended Audience :: Manufacturing",
     "Topic :: Scientific/Engineering :: Physics",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 
-[project.urls]
-Homepage = "https://github.com/123VincentB/eulumdat-plot"
-
 [project.optional-dependencies]
+# Raster export (SVG → PNG / JPEG)
+export = [
+    "vl-convert-python >= 1.6",
+    "Pillow >= 9.0",
+]
+# Smooth curve interpolation
+cubic = [
+    "scipy >= 1.7",
+]
+# Everything
+full = [
+    "eulumdat-plot[export]",
+    "eulumdat-plot[cubic]",
+]
+# Development tools
 dev = [
     "build",
     "twine",
+    "pytest >= 7.0",
+    "eulumdat-plot[full]",
 ]
+
+[project.urls]
+Homepage    = "https://github.com/123VincentB/eulumdat-plot"
+Repository  = "https://github.com/123VincentB/eulumdat-plot"
+Issues      = "https://github.com/123VincentB/eulumdat-plot/issues"
+Changelog   = "https://github.com/123VincentB/eulumdat-plot/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+# Add src/ to sys.path so pytest finds eulumdat_plot without editable install.
+pythonpath = ["src"]
+testpaths  = ["tests"]
