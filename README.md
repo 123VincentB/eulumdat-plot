@@ -2,7 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/eulumdat-plot)](https://pypi.org/project/eulumdat-plot/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/eulumdat-plot)](https://pypi.org/project/eulumdat-plot/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/123VincentB/eulumdat-plot/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/github/license/123VincentB/eulumdat-plot)](https://github.com/123VincentB/eulumdat-plot/blob/main/LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19096110.svg)](https://doi.org/10.5281/zenodo.19096110)
 
 Photometric polar diagram generator for EULUMDAT (`.ldt`) files —
