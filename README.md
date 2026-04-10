@@ -65,13 +65,16 @@ pip install "eulumdat-plot[full]"
 ## Quick start
 
 ```python
-from eulumdat_plot import plot_ldt
+from eulumdat_plot import plot_ldt, plot_ldt_svg
 
-# Generate an SVG next to the source file
-svg = plot_ldt("luminaire.ldt")
+# Generate an SVG file next to the source file
+path = plot_ldt("luminaire.ldt")
 
 # With a distribution code in the banner centre
-svg = plot_ldt("luminaire.ldt", code="D53")
+path = plot_ldt("luminaire.ldt", code="D53")
+
+# Get the SVG as a string (for inline HTML embedding, no file written)
+svg_str = plot_ldt_svg("luminaire.ldt")
 ```
 
 ## Scaling
@@ -127,6 +130,23 @@ def plot_ldt(
 | `interp_method`   | `"linear"`        | `"linear"` or `"cubic"` (requires scipy)     |
 | `debug`           | `False`           | Colour-code C-planes for visual validation   |
 
+### `plot_ldt_svg()`
+
+Same as `plot_ldt()` but returns the SVG as a **string** instead of writing to
+disk. Useful for inline HTML embedding (no temporary file created).
+
+```python
+def plot_ldt_svg(
+    ldt_path: str | Path,
+    *,
+    code: str = "",
+    layout: Layout | None = None,
+    interpolate: bool = True,
+    interp_step_deg: float = 1.0,
+    interp_method: str = "linear",
+) -> str
+```
+
 ### `Layout.for_size()`
 
 ```python
@@ -181,13 +201,14 @@ eulumdat-plot/
 
 ## EULUMDAT ecosystem
 
-| Package                                                            | Status  | Description                                  |
-| ------------------------------------------------------------------ | ------- | -------------------------------------------- |
-| [`eulumdat-py`](https://pypi.org/project/eulumdat-py/)             | v0.1.4  | Read / write EULUMDAT files                  |
-| [`eulumdat-symmetry`](https://pypi.org/project/eulumdat-symmetry/) | v1.0.0  | Symmetrise EULUMDAT files                    |
-| `eulumdat-plot`                                                    | v1.0.0  | Photometric polar diagram — **this package** |
-| `eulumdat-luminance`                                               | planned | Luminance table cd/m² (γ 55°–85°)            |
-| `eulumdat-ugr`                                                     | planned | UGR calculation (CIE 117, CIE 190)           |
+| Package                                                                    | Status  | Description                                  |
+| -------------------------------------------------------------------------- | ------- | -------------------------------------------- |
+| [`eulumdat-py`](https://pypi.org/project/eulumdat-py/)                     | v1.0.0  | Read / write EULUMDAT files                  |
+| [`eulumdat-symmetry`](https://pypi.org/project/eulumdat-symmetry/)         | v1.0.0  | Symmetrise EULUMDAT files                    |
+| [`eulumdat-analysis`](https://pypi.org/project/eulumdat-analysis/)         | v1.0.0  | Photometric calculations (half-angle, …)     |
+| `eulumdat-plot`                                                             | v1.0.3  | Photometric polar diagram — **this package** |
+| [`eulumdat-luminance`](https://pypi.org/project/eulumdat-luminance/)       | v1.3.0  | Luminance table and polar diagram (cd/m²)    |
+| [`eulumdat-ugr`](https://pypi.org/project/eulumdat-ugr/)                   | v1.0.2  | UGR calculation (CIE 117, CIE 190)           |
 
 ## Requirements
 

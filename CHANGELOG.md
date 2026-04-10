@@ -7,6 +7,32 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.3] — 2026-04-10
+
+### Added
+- `plot_ldt_svg()` — same pipeline as `plot_ldt()` but returns the SVG as a
+  string instead of writing to disk; intended for inline HTML embedding
+- `make_svg_str()` — low-level counterpart to `make_svg()`, returns SVG string
+  via `dwg.tostring()` without any file I/O
+- `renderer.py`: internal `_build_drawing()` helper factored out to avoid
+  code duplication between `make_svg()` and `make_svg_str()`
+
+---
+
+## [1.0.2] — 2026
+
+### Fixed
+- README image size
+
+---
+
+## [1.0.1] — 2026
+
+### Fixed
+- README images for PyPI rendering
+
+---
+
 ## [1.0.0] — 2026
 
 ### Added

@@ -257,12 +257,12 @@ def _nice_levels(r_max: float) -> List[int]:
 # SVG renderer
 # ---------------------------------------------------------------------------
 
-def make_svg(
+def _build_drawing(
     curves_solid: List[NatCurve],
     curves_dotted: List[NatCurve],
     r_data_max: float,
     *,
-    outfile: str | Path = "photometric.svg",
+    filename: str = "_",
     code: str = "",
     layout: Optional[Layout] = None,
     debug: bool = False,
@@ -270,42 +270,8 @@ def make_svg(
     colors_dotted: Optional[List[str]] = None,
     strokes_solid: Optional[List[float]] = None,
     strokes_dotted: Optional[List[float]] = None,
-) -> Path:
-    """
-    Generate a Lumtopic-style photometric polar diagram as an SVG file.
-
-    Parameters
-    ----------
-    curves_solid :
-        Solid curves (typically C0 / C180), each as a list of
-        ``(x_nat, y_nat)`` points.
-    curves_dotted :
-        Dotted curves (typically C90 / C270), same format.
-    r_data_max :
-        Maximum intensity across all curves (cd/klm).
-        Drives the radial scale computation.
-    outfile :
-        Destination SVG path.  Default: ``"photometric.svg"``.
-    code :
-        Distribution code shown in the banner centre (e.g. ``"D53"``).
-        Pass an empty string to leave it blank.
-    layout :
-        Visual parameters.  If ``None``, :class:`Layout` defaults are used.
-    debug :
-        If ``True``, draw the plot area in blue and the curve bounding box
-        in green as diagnostic overlays.
-    colors_solid / colors_dotted :
-        Per-curve SVG stroke colours.  Defaults to black for all curves.
-    strokes_solid / strokes_dotted :
-        Per-curve stroke widths.  Defaults to ``layout.stroke_curve_solid``
-        and ``layout.stroke_curve_dotted`` respectively.
-
-    Returns
-    -------
-    :class:`pathlib.Path`
-        Absolute path to the generated SVG file.
-    """
-    outfile = Path(outfile)
+) -> "svgwrite.Drawing":
+    """Build and return the svgwrite Drawing object (without saving)."""
     if layout is None:
         layout = Layout()
 
@@ -395,7 +361,7 @@ def make_svg(
     # ------------------------------------------------------------------
     # 6. Assemble SVG
     # ------------------------------------------------------------------
-    dwg = svgwrite.Drawing(str(outfile), size=(W, H))
+    dwg = svgwrite.Drawing(filename, size=(W, H))
 
     # --- Clip path (plot area only) ---
     clip_id = "plot_clip"
@@ -508,5 +474,95 @@ def make_svg(
             stroke="green", stroke_width=5, fill="none",
         ))
 
+    return dwg
+
+
+def make_svg(
+    curves_solid: List[NatCurve],
+    curves_dotted: List[NatCurve],
+    r_data_max: float,
+    *,
+    outfile: str | Path = "photometric.svg",
+    code: str = "",
+    layout: Optional[Layout] = None,
+    debug: bool = False,
+    colors_solid: Optional[List[str]] = None,
+    colors_dotted: Optional[List[str]] = None,
+    strokes_solid: Optional[List[float]] = None,
+    strokes_dotted: Optional[List[float]] = None,
+) -> Path:
+    """
+    Generate a Lumtopic-style photometric polar diagram as an SVG file.
+
+    Parameters
+    ----------
+    curves_solid :
+        Solid curves (typically C0 / C180), each as a list of
+        ``(x_nat, y_nat)`` points.
+    curves_dotted :
+        Dotted curves (typically C90 / C270), same format.
+    r_data_max :
+        Maximum intensity across all curves (cd/klm).
+        Drives the radial scale computation.
+    outfile :
+        Destination SVG path.  Default: ``"photometric.svg"``.
+    code :
+        Distribution code shown in the banner centre (e.g. ``"D53"``).
+        Pass an empty string to leave it blank.
+    layout :
+        Visual parameters.  If ``None``, :class:`Layout` defaults are used.
+    debug :
+        If ``True``, draw the plot area in blue and the curve bounding box
+        in green as diagnostic overlays.
+    colors_solid / colors_dotted :
+        Per-curve SVG stroke colours.  Defaults to black for all curves.
+    strokes_solid / strokes_dotted :
+        Per-curve stroke widths.  Defaults to ``layout.stroke_curve_solid``
+        and ``layout.stroke_curve_dotted`` respectively.
+
+    Returns
+    -------
+    :class:`pathlib.Path`
+        Absolute path to the generated SVG file.
+    """
+    outfile = Path(outfile)
+    dwg = _build_drawing(
+        curves_solid, curves_dotted, r_data_max,
+        filename=str(outfile),
+        code=code, layout=layout, debug=debug,
+        colors_solid=colors_solid, colors_dotted=colors_dotted,
+        strokes_solid=strokes_solid, strokes_dotted=strokes_dotted,
+    )
     dwg.save()
     return outfile.resolve()
+
+
+def make_svg_str(
+    curves_solid: List[NatCurve],
+    curves_dotted: List[NatCurve],
+    r_data_max: float,
+    *,
+    code: str = "",
+    layout: Optional[Layout] = None,
+    debug: bool = False,
+    colors_solid: Optional[List[str]] = None,
+    colors_dotted: Optional[List[str]] = None,
+    strokes_solid: Optional[List[float]] = None,
+    strokes_dotted: Optional[List[float]] = None,
+) -> str:
+    """
+    Same as :func:`make_svg` but returns the SVG as a string instead of
+    writing to disk.
+
+    Returns
+    -------
+    str
+        SVG document as a string (starts with ``<svg``).
+    """
+    dwg = _build_drawing(
+        curves_solid, curves_dotted, r_data_max,
+        code=code, layout=layout, debug=debug,
+        colors_solid=colors_solid, colors_dotted=colors_dotted,
+        strokes_solid=strokes_solid, strokes_dotted=strokes_dotted,
+    )
+    return dwg.tostring()

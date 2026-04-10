@@ -52,7 +52,7 @@ try:
 except ImportError:
     _HAS_SCIPY = False
 
-from .renderer import Layout, NatCurve, make_svg, polar_to_nat
+from .renderer import Layout, NatCurve, make_svg, make_svg_str, polar_to_nat
 
 
 # ---------------------------------------------------------------------------
@@ -358,6 +358,86 @@ def plot_ldt(
         code=code,
         layout=layout,
         debug=debug,
+        colors_solid=colors_solid,
+        colors_dotted=colors_dotted,
+        strokes_solid=strokes_solid,
+        strokes_dotted=strokes_dotted,
+    )
+
+
+def plot_ldt_svg(
+    ldt_path: str | Path,
+    *,
+    code: str = "",
+    layout: Optional[Layout] = None,
+    interpolate: bool = True,
+    interp_step_deg: float = 1.0,
+    interp_method: str = "linear",
+) -> str:
+    """
+    Same as :func:`plot_ldt` but returns the SVG as a string instead of
+    writing to disk.
+
+    Returns
+    -------
+    str
+        SVG document as a string (starts with ``<svg``).
+    """
+    ldt_path = Path(ldt_path)
+    if layout is None:
+        layout = Layout()
+
+    ldt = LdtReader.read(ldt_path)
+
+    I_C0   = _get_plane(ldt,   0.0)
+    I_C90  = _get_plane(ldt,  90.0)
+    I_C180 = _get_plane(ldt, 180.0)
+    I_C270 = _get_plane(ldt, 270.0)
+
+    available = [p for p in (I_C0, I_C90, I_C180, I_C270) if p is not None]
+    if not available:
+        raise ValueError(f"No usable C-plane data found in '{ldt_path}'.")
+
+    r_data_max = float(np.vstack(available).max())
+
+    g_deg = np.asarray(ldt.header.g_angles, dtype=float)
+    if interpolate and g_deg.size > 1:
+        g_deg, (I_C0, I_C90, I_C180, I_C270) = _resample(
+            g_deg, I_C0, I_C90, I_C180, I_C270,
+            step_deg=interp_step_deg,
+            method=interp_method,
+        )
+
+    curves_solid: List[NatCurve]  = []
+    curves_dotted: List[NatCurve] = []
+    colors_solid:  List[str]      = []
+    colors_dotted: List[str]      = []
+    strokes_solid:  List[float]   = []
+    strokes_dotted: List[float]   = []
+
+    def _register(arr_right, arr_left, *, solid: bool) -> None:
+        cr, cl = _build_nat_pair(g_deg, arr_right, arr_left)
+        for curve in (cr, cl):
+            if curve is None:
+                continue
+            if solid:
+                curves_solid.append(curve)
+                colors_solid.append("black")
+                strokes_solid.append(layout.stroke_curve_solid)
+            else:
+                curves_dotted.append(curve)
+                colors_dotted.append("black")
+                strokes_dotted.append(layout.stroke_curve_dotted)
+
+    _register(I_C0, I_C180, solid=True)
+    _register(I_C90, I_C270, solid=False)
+
+    return make_svg_str(
+        curves_solid=curves_solid,
+        curves_dotted=curves_dotted,
+        r_data_max=r_data_max,
+        code=code,
+        layout=layout,
         colors_solid=colors_solid,
         colors_dotted=colors_dotted,
         strokes_solid=strokes_solid,

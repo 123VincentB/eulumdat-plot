@@ -39,12 +39,14 @@ Public API
     Convert polar ``(r, θ)`` to NAT ``(x, y)`` Cartesian coordinates.
 """
 
-from .plot import plot_ldt
-from .renderer import Layout, make_svg, polar_to_nat
+from .plot import plot_ldt, plot_ldt_svg
+from .renderer import Layout, make_svg, make_svg_str, polar_to_nat
 
 __all__ = [
     "plot_ldt",
+    "plot_ldt_svg",
     "Layout",
     "make_svg",
+    "make_svg_str",
     "polar_to_nat",
 ]
