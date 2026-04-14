@@ -199,16 +199,20 @@ eulumdat-plot/
 └── README.md
 ```
 
-## EULUMDAT ecosystem
+## eulumdat-* ecosystem
 
-| Package                                                                    | Status  | Description                                  |
-| -------------------------------------------------------------------------- | ------- | -------------------------------------------- |
-| [`eulumdat-py`](https://pypi.org/project/eulumdat-py/)                     | v1.0.0  | Read / write EULUMDAT files                  |
-| [`eulumdat-symmetry`](https://pypi.org/project/eulumdat-symmetry/)         | v1.0.0  | Symmetrise EULUMDAT files                    |
-| [`eulumdat-analysis`](https://pypi.org/project/eulumdat-analysis/)         | v1.0.0  | Photometric calculations (half-angle, …)     |
-| `eulumdat-plot`                                                             | v1.0.3  | Photometric polar diagram — **this package** |
-| [`eulumdat-luminance`](https://pypi.org/project/eulumdat-luminance/)       | v1.3.0  | Luminance table and polar diagram (cd/m²)    |
-| [`eulumdat-ugr`](https://pypi.org/project/eulumdat-ugr/)                   | v1.0.2  | UGR calculation (CIE 117, CIE 190)           |
+> **New to the ecosystem?** [eulumdat-quickstart](https://github.com/123VincentB/eulumdat-quickstart) — a step-by-step guide covering all 8 packages with working examples.
+
+| Package | Description |
+|---|---|
+| [eulumdat-py](https://pypi.org/project/eulumdat-py/) | Read / write EULUMDAT files |
+| [eulumdat-symmetry](https://pypi.org/project/eulumdat-symmetry/) | Symmetrise and detect ISYM |
+| **`eulumdat-plot`** | **Polar intensity diagram (SVG/PNG) — this package** |
+| [eulumdat-luminance](https://pypi.org/project/eulumdat-luminance/) | Luminance table and polar diagram |
+| [eulumdat-ugr](https://pypi.org/project/eulumdat-ugr/) | UGR catalogue (CIE 117/190) |
+| [eulumdat-analysis](https://pypi.org/project/eulumdat-analysis/) | Beam half-angle, FWHM |
+| [eulumdat-report](https://pypi.org/project/eulumdat-report/) | Full photometric datasheet (HTML/PDF) |
+| [eulumdat-ies](https://pypi.org/project/eulumdat-ies/) | LDT ↔ IES LM-63-2002 conversion |
 
 ## Requirements
 
